@@ -1,4 +1,58 @@
+// Valor total
+const counterMais = document.getElementById('plus-btn');
+const counterMenos = document.getElementById('minus-btn');
+const valorTotalInput = document.getElementById('total-value');
+const valorTotalDescricao = document.getElementById('descricaoValorTotal');
+let valorTotal;
+
+function adicionarValor() {
+    let valorAdicionar = document.querySelector('.activeValueToAdd').textContent;
+    valorAdicionar = Number(valorAdicionar.replace(/[^0-9\.]/g, ''));
+    
+    valorTotal = Number(valorTotalInput.textContent.replace(/[^0-9\.]/g, ''));
+    if(typeof valorTotal !== 'number') return;
+    if(!valorTotal || valorTotal < 0) valorTotal = 0.00;
+    valorTotal += valorAdicionar;
+    if(valorTotal <= 0) valorTotal = "0";
+    
+    valorTotalInput.innerHTML = `R$${valorTotal}.00`;
+    valorTotalDescricao.innerHTML = `R$${valorTotal}.00`;
+}
+function subtrairValor() {
+    let valorSubtrair = document.querySelector('.activeValueToAdd').textContent;
+    valorSubtrair = Number(valorSubtrair.replace(/[^0-9\.]/g, ''));
+    
+    valorTotal = Number(valorTotalInput.textContent.replace(/[^0-9\.]/g, ''));
+    if(typeof valorTotal !== 'number') return;
+    if(!valorTotal || valorTotal < 0) valorTotal = 0.00;
+    valorTotal -= valorSubtrair;
+    if(valorTotal <= 0) valorTotal = "0";
+    
+    valorTotalInput.innerHTML = `R$${valorTotal}.00`;
+    valorTotalDescricao.innerHTML = `R$${valorTotal}.00`;
+}
+
+
+// Form
+const formEl = document.querySelector('.form-container')
+formEl.addEventListener('submit', event => {
+    event.preventDefault()
+    const formData = new FormData(formEl)
+    const data = Object.fromEntries(formData)
+
+    data.valor = valorTotal;
+    
+    fetch('https://lolosapeca.com.br', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+})
+
 window.onload = function () {
+    // ? Cartão de crédito
     const name = document.getElementById('name');
     const cardnumber = document.getElementById('cardnumber');
     const expirationdate = document.getElementById('expirationdate');

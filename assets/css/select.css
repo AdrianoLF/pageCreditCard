@@ -11,8 +11,10 @@
   --listTextActive: #6C7486;
   --listBorder: #E4ECFA;
   --textFilled: #6C7486;
-  width: 220px;
+  max-width: 100%;
   position: relative;
+  display: inline-block;
+  height: 50px;
 }
 .dropdown select {
   display: none;
@@ -30,7 +32,7 @@
 }
 .dropdown > span:before, .dropdown > span:after {
   content: "";
-  display: block;
+  display: inline-block;
   position: absolute;
   width: 8px;
   height: 2px;
